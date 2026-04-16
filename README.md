@@ -20,24 +20,24 @@ Optimized for WSL2 (Ubuntu) on Windows 10/11. Native support for UTF-8 to UTF-16
 
 Since it's zero-dependency, you can clone and build it in seconds:
 
-\`\`\`bash
+```bash
 git clone https://github.com/YOUR_USERNAME/ai-compressor.git
 cd ai-compressor
 yarn install
 yarn build
-\`\`\`
+```
 
 To make it globally available on your system (Unix/Linux/WSL2):
-\`\`\`bash
+```bash
 chmod +x dist/cli.js
 sudo ln -s "$PWD/dist/cli.js" /usr/local/bin/ai-compress
-\`\`\`
+```
 
 ## 🛠️ Usage
 
-\`\`\`bash
+```bash
 ai-compress <file> [options]
-\`\`\`
+```
 
 ### Options
 * `-f, --file` : Path to the file you want to compress.
@@ -47,19 +47,19 @@ ai-compress <file> [options]
 ### Examples
 
 **1. Compress project documentation and copy to clipboard:**
-\`\`\`bash
+```bash
 ai-compress -f docs/architecture.md
-\`\`\`
+```
 
 **2. Compress a source file safely (strips comments, minifies safely):**
-\`\`\`bash
+```bash
 ai-compress -f src/lib/micro-bus.ts
-\`\`\`
+```
 
 **3. Save the compressed output to a new file instead of clipboard:**
-\`\`\`bash
+```bash
 ai-compress -f README.md -o file
-\`\`\`
+```
 
 ## 🧠 The Architecture (Graceful Degradation)
 
@@ -70,9 +70,9 @@ This tool is designed to work in two tiers:
 
 **To activate Tier 1:**
 Export your free Gemini API key in your terminal profile (e.g., `~/.bashrc` or `~/.zshrc`):
-\`\`\`bash
+```bash
 export GEMINI_FREE_KEY="your_api_key_here"
-\`\`\`
+```
 
 ## 🛡️ Safety First
 The internal `detect.ts` gatekeeper prevents accidental destruction of source code. If you try to force the `text` engine onto a file like `.env` or `app.tsx`, the tool will abort the operation to preserve your syntax.
