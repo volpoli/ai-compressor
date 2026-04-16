@@ -1,0 +1,19 @@
+.
+├── README.md
+├── dist
+│   └── cli.js
+├── package.json
+├── src
+│   ├── cli.ts
+│   ├── engines
+│   │   ├── code-compressor.ts
+│   │   └── orchestrator.ts
+│   └── utils
+│       ├── clipboard.ts
+│       └── detect.ts
+├── structure.txt
+├── tsconfig.json
+├── tsup.config.ts
+└── yarn.lock
+
+5 directories, 12 files

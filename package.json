@@ -1,4 +1,29 @@
 {
   "name": "ai-compressor",
-  "packageManager": "yarn@4.10.3"
+  "version": "1.0.0",
+  "description": "Zero-dependency CLI tool to compress text and code for AI context windows.",
+  "main": "dist/cli.js",
+  "bin": {
+    "ai-compress": "./dist/cli.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/cli.js"
+  },
+  "author": "Di Carlo Fernando",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/volpoli/ai-compressor.git"
+  }
 }
