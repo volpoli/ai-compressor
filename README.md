@@ -59,7 +59,6 @@ ai-compress -f src/lib/micro-bus.ts
 **3. Save the compressed output to a new file instead of clipboard:**
 \`\`\`bash
 ai-compress -f README.md -o file
-# Creates: README.md.compressed
 \`\`\`
 
 ## 🧠 The Architecture (Graceful Degradation)
