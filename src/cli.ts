@@ -96,7 +96,7 @@ Opzioni:
             result = await compressTextWithStats(content);
         } else {
             if (config.verbose) console.log("-> Avvio motore codice (Minificazione Sicura AST-Free)...");
-            result = compressCodeWithStats(content);
+            result = compressCodeWithStats(content, config.file);
         }
 
         // Show stats

@@ -1,4 +1,13 @@
 import { CompressionStats, calculateStats } from '../utils/stats';
+import { detectLanguage } from '../utils/detect';
+import {
+    compressJavaScript,
+    compressTypeScript
+} from './languages/javascript';
+import { compressPython } from './languages/python';
+import { compressCSS } from './languages/css';
+import { compressHTML } from './languages/html';
+import { compressJSON } from './languages/json';
 
 export interface CompressionResult {
     content: string;
@@ -9,7 +18,34 @@ export function compressCode(code: string): string {
     return compressCodeWithStats(code).content;
 }
 
-export function compressCodeWithStats(code: string): CompressionResult {
+export function compressCodeWithStats(code: string, filePath?: string): CompressionResult {
+    // If no file path provided, use generic compression
+    if (!filePath) {
+        return compressGeneric(code);
+    }
+
+    const language = detectLanguage(filePath);
+
+    switch (language) {
+        case 'javascript':
+            return compressJavaScript(code);
+        case 'typescript':
+            return compressTypeScript(code);
+        case 'python':
+            return compressPython(code);
+        case 'css':
+            return compressCSS(code);
+        case 'html':
+            return compressHTML(code);
+        case 'json':
+            return compressJSON(code);
+        default:
+            // Fallback to generic compression
+            return compressGeneric(code);
+    }
+}
+
+function compressGeneric(code: string): CompressionResult {
     let minified = code;
 
     // 0. NORMALIZZAZIONE: Uniforma ritorni a capo Windows (\r\n) e Mac vecchi (\r) in puro Unix (\n)

@@ -1,10 +1,21 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+const LANGUAGE_EXTENSIONS = {
+    javascript: ['.js', '.mjs', '.cjs'],
+    typescript: ['.ts', '.tsx', '.mts', '.cts'],
+    python: ['.py', '.pyw', '.pyi'],
+    css: ['.css', '.scss', '.sass', '.less'],
+    html: ['.html', '.htm', '.xml', '.svg'],
+    json: ['.json', '.jsonc'],
+};
+
 const COMPRESSIBLE_EXTENSIONS = new Set(['.md', '.txt', '.markdown', '.mdx']);
 const SKIP_EXTENSIONS = new Set([
-    '.js', '.ts', '.tsx', '.jsx', '.json', '.yaml', '.yml',
-    '.env', '.css', '.html', '.sh', '.ino', '.cpp', '.h', '.sql'
+    '.js', '.ts', '.tsx', '.jsx', '.mjs', '.cjs', '.mts', '.cts',
+    '.json', '.yaml', '.yml', '.css', '.scss', '.sass', '.less',
+    '.html', '.htm', '.xml', '.svg', '.env', '.sh', '.ino', '.cpp', '.h', '.sql',
+    '.py', '.pyw', '.pyi'
 ]);
 
 const CODE_PATTERNS = [
@@ -17,6 +28,7 @@ const CODE_PATTERNS = [
 ];
 
 export type FileType = 'text' | 'code' | 'config' | 'unknown';
+export type LanguageType = 'javascript' | 'typescript' | 'python' | 'css' | 'html' | 'json' | 'unknown';
 
 export function detectFileType(filePath: string): FileType {
     const ext = path.extname(filePath).toLowerCase();
@@ -26,6 +38,7 @@ export function detectFileType(filePath: string): FileType {
         return ['.json', '.yaml', '.yml', '.env'].includes(ext) ? 'config' : 'code';
     }
 
+    // Fallback to content analysis for unknown extensions
     try {
         const buffer = Buffer.alloc(2048);
         const fd = fs.openSync(filePath, 'r');
@@ -53,4 +66,16 @@ export function detectFileType(filePath: string): FileType {
     } catch (error) {
         return 'unknown';
     }
+}
+
+export function detectLanguage(filePath: string): LanguageType {
+    const ext = path.extname(filePath).toLowerCase();
+
+    for (const [language, extensions] of Object.entries(LANGUAGE_EXTENSIONS)) {
+        if (extensions.includes(ext)) {
+            return language as LanguageType;
+        }
+    }
+
+    return 'unknown';
 }
