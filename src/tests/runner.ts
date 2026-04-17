@@ -4,24 +4,24 @@ import assert from 'node:assert';
 
 const tests = [
     {
-        name: "CSS: Minificazione base e stripping commenti",
-        input: `.header { \n  margin: 20px; \n  /* commento */ \n  color: red; \n}`,
+        name: "CSS: Basic minification and comment stripping",
+        input: `.header { \n  margin: 20px; \n  /* comment */ \n  color: red; \n}`,
         check: (out: string) => out.includes('.header{') && !out.includes('/*')
     },
     {
-        name: "PHP: Integrità tag di apertura e chiusura",
-        input: `<?php \n // commento \n echo "Hello"; \n ?>`,
+        name: "PHP: Opening and closing tag integrity",
+        input: `<?php \n // comment \n echo "Hello"; \n ?>`,
         check: (out: string) => out.startsWith('<?php') && out.endsWith('?>') && out.includes('echo "Hello";')
     },
     {
-        name: "HTML: Rimozione spazi superflui tra tag",
-        input: `<div class="container"> \n    <p> \n        Testo \n    </p> \n </div>`,
-        check: (out: string) => out.includes('"><p>') || out.includes('">\n<p>') // Dipende dalla nostra regex verticale
+        name: "HTML: Removing excessive spaces between tags",
+        input: `<div class="container"> \n    <p> \n        Text \n    </p> \n </div>`,
+        check: (out: string) => out.includes('"><p>') || out.includes('">\n<p>') // Depends on our vertical regex
     },
     {
-        name: "JS: Conservazione stringhe con commenti finti",
-        input: `const url = "https://google.com"; // non rimuovere questo protocollo`,
-        check: (out: string) => out.includes('https://google.com') && !out.includes('non rimuovere')
+        name: "JS: Preserving strings with fake comments",
+        input: `const url = "https://google.com"; // do not remove this protocol`,
+        check: (out: string) => out.includes('https://google.com') && !out.includes('do not remove')
     }
 ];
 
@@ -37,11 +37,11 @@ async function run() {
             passed++;
         } catch (e) {
             console.error(`❌ ${test.name}`);
-            console.error(`   Logica fallita. Output ricevuto: \n${compressCode(test.input)}`);
+            console.error(`   Logic failed. Received output: \n${compressCode(test.input)}`);
         }
     }
 
-    console.log(`\n📊 Risultato: ${passed}/${tests.length} superati.`);
+    console.log(`\n📊 Result: ${passed}/${tests.length} passed.`);
     process.exit(passed === tests.length ? 0 : 1);
 }
 

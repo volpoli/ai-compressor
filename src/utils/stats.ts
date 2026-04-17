@@ -31,11 +31,11 @@ export function calculateStats(original: string, compressed: string): Compressio
 
 export function formatStats(stats: CompressionStats): string {
     return `
-📊 Statistiche Compressione:
-   Original:  ${formatBytes(stats.originalSize)} (${stats.linesBefore} righe)
-   Compressed: ${formatBytes(stats.compressedSize)} (${stats.linesAfter} righe)
-   Riduzione: ${stats.percentReduction}% (${formatBytes(stats.bytesRemoved)} risparmiati)
-   Righe rimosse: ${stats.linesRemoved}
+📊 Compression Statistics:
+   Original:  ${formatBytes(stats.originalSize)} (${stats.linesBefore} lines)
+   Compressed: ${formatBytes(stats.compressedSize)} (${stats.linesAfter} lines)
+   Reduction: ${stats.percentReduction}% (${formatBytes(stats.bytesRemoved)} saved)
+   Lines removed: ${stats.linesRemoved}
 `;
 }
 

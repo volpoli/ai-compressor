@@ -1,0 +1,22 @@
+{
+    "mode": "auto",
+    "output": "clip",
+    "verbose": true,
+    "quiet": false,
+    "dryRun": false,
+    "format": "default",
+    "recursive": false,
+    "maxFileSize": 1048576,
+    "exclude": [
+        "node_modules",
+        ".git",
+        "dist",
+        "build"
+    ],
+    "include": [],
+    "preserve": {
+        "docs": false,
+        "comments": false,
+        "emptyLines": false
+    }
+}
