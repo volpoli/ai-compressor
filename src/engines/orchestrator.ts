@@ -1,3 +1,10 @@
+import { CompressionStats, calculateStats } from '../utils/stats';
+
+export interface CompressionResult {
+    content: string;
+    stats: CompressionStats;
+}
+
 const COMPRESS_PROMPT = `
 Riscrivi questo testo in modalità Caveman. 
 REGOLE RIGIDE:
@@ -8,12 +15,19 @@ REGOLE RIGIDE:
 `;
 
 export async function compressText(text: string): Promise<string> {
+    const result = await compressTextWithStats(text);
+    return result.content;
+}
+
+export async function compressTextWithStats(text: string): Promise<CompressionResult> {
     const apiKey = process.env.GEMINI_FREE_KEY;
 
     if (apiKey) {
         try {
             console.log("-> API Gemini (Free Tier) rilevata. Avvio compressione IA...");
-            return await callGeminiAPI(text, apiKey);
+            const compressed = await callGeminiAPI(text, apiKey);
+            const stats = calculateStats(text, compressed);
+            return { content: compressed, stats };
         } catch (error: any) {
             console.warn(`\n[AVVISO] Errore API o Limite Raggiunto: ${error.message}`);
             console.log("-> Graceful Degradation innescata. Ripiego sul motore locale...");
@@ -22,7 +36,7 @@ export async function compressText(text: string): Promise<string> {
         console.log("-> Nessuna GEMINI_FREE_KEY trovata. Avvio motore locale...");
     }
 
-    return compressLocally(text);
+    return compressTextLocally(text);
 }
 
 async function callGeminiAPI(text: string, apiKey: string): Promise<string> {
@@ -47,7 +61,7 @@ async function callGeminiAPI(text: string, apiKey: string): Promise<string> {
     return data.candidates[0].content.parts[0].text.trim();
 }
 
-function compressLocally(text: string): string {
+function compressTextLocally(text: string): CompressionResult {
     const placeholders: string[] = [];
     let processedText = text;
 
@@ -78,5 +92,8 @@ function compressLocally(text: string): string {
         return placeholders[parseInt(index, 10)];
     });
 
-    return processedText.trim();
+    const trimmed = processedText.trim();
+    const stats = calculateStats(text, trimmed);
+
+    return { content: trimmed, stats };
 }

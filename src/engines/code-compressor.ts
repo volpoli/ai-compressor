@@ -1,4 +1,15 @@
+import { CompressionStats, calculateStats } from '../utils/stats';
+
+export interface CompressionResult {
+    content: string;
+    stats: CompressionStats;
+}
+
 export function compressCode(code: string): string {
+    return compressCodeWithStats(code).content;
+}
+
+export function compressCodeWithStats(code: string): CompressionResult {
     let minified = code;
 
     // 0. NORMALIZZAZIONE: Uniforma ritorni a capo Windows (\r\n) e Mac vecchi (\r) in puro Unix (\n)
@@ -26,5 +37,8 @@ export function compressCode(code: string): string {
     // Fonde qualsiasi quantità di \n consecutivi (compresi quelli lasciati dai commenti appena rimossi) in un unico \n.
     minified = minified.replace(/\n+/g, '\n');
 
-    return minified.trim();
+    const trimmed = minified.trim();
+    const stats = calculateStats(code, trimmed);
+
+    return { content: trimmed, stats };
 }
