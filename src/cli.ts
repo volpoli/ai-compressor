@@ -135,7 +135,7 @@ async function processDirectory(dirPath: string, config: AICompressConfig): Prom
     for (const file of files) {
         try {
             // Create a config for this specific file
-            const fileConfig = { ...config, file: file, recursive: false };
+            const fileConfig = { ...config, recursive: false };
             await processFile(file, fileConfig);
             processed++;
 
@@ -237,18 +237,19 @@ Examples:
     // Load config file
     const configFile = loadConfig();
     const cliOptions = parseArgs(rawArgs);
+    const file = cliOptions.file; // Extract file before merging
     const config = mergeConfig(cliOptions, configFile);
 
-    if (!config.file) {
+    if (!file) {
         if (!config.quiet) console.error("❌ Error: Specify a file or directory.");
         process.exit(1);
     }
 
     // Handle batch processing
-    if (config.recursive && fs.statSync(config.file as string).isDirectory()) {
-        await processDirectory(config.file as string, config);
+    if (config.recursive && fs.statSync(file as string).isDirectory()) {
+        await processDirectory(file as string, config);
     } else {
-        await processFile(config.file as string, config);
+        await processFile(file as string, config);
     }
 }
 

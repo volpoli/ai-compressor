@@ -100,6 +100,6 @@ function parseSimpleYAML(content: string): AICompressConfig {
     return config;
 }
 
-export function mergeConfig(cliOptions: Partial<AICompressConfig>, configFile?: AICompressConfig): AICompressConfig {
+export function mergeConfig(cliOptions: Partial<AICompressConfig>, configFile?: AICompressConfig | null): AICompressConfig {
     return { ...configFile, ...cliOptions };
 }
