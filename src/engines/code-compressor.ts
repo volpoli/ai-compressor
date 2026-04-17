@@ -19,6 +19,8 @@ export function compressCode(code: string): string {
     // 4. NOVITÀ: Rimuove spazi prima e dopo operatori sicuri (senza toccare < > per via di JSX)
     // Non tocca i ritorni a capo (\n), rimuove solo gli spazi orizzontali.
     minified = minified.replace(/ ([=,:;\{\}\(\)\[\]]) /g, '$1');
+    minified = minified.replace(/ ([=,:;\{\}\(\)\[\]])/g, '$1');
+    minified = minified.replace(/([=,:;\{\}\(\)\[\]]) /g, '$1');
 
     // 5. L'ANNIHILATORE VERTICALE:
     // Fonde qualsiasi quantità di \n consecutivi (compresi quelli lasciati dai commenti appena rimossi) in un unico \n.
