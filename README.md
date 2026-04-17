@@ -47,7 +47,7 @@ ai-compress <file|directory> [options]
 ### Options
 * `-f, --file` : Path to the file or directory you want to compress.
 * `-m, --mode` : Force compression mode (`text` or `code`). Default is `auto`.
-* `-o, --output` : Output destination (`clip` or `file`). Default is `clip` (copies to clipboard).
+* `-o, --output` : Output destination (`clip` or `file`). Default is `clip` (copies to clipboard). NOTE: cannot use 'clip' with --recursive
 * `--format` : Output format (`default`, `json`, or `stats-only`). Default is `default`.
 * `-v, --verbose` : Show detailed processing information.
 * `-q, --quiet` : Minimal output (only errors and final results).

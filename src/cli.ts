@@ -212,9 +212,9 @@ Usage: ai-compress <file|directory> [options]
 Options:
   -f, --file      Path to the file or directory to compress
   -m, --mode      Compression mode ('text' | 'code'). Default: auto
-  -o, --output    Output destination ('clip' | 'file'). Default: clip
+  -o, --output    Output destination ('clip' | 'file'). Default: clip (clipboard) NOTE: cannot use 'clip' with --recursive
   --format        Output format ('default' | 'json' | 'stats-only'). Default: default
-  -v, --verbose   Detailed output
+  -v, --verbose   Detailed output with stats and processing info
   -q, --quiet     Minimal output
   --dry-run       Preview without saving/copying
   -r, --recursive Process directories recursively
@@ -242,6 +242,11 @@ Examples:
 
     if (!file) {
         if (!config.quiet) console.error("❌ Error: Specify a file or directory.");
+        process.exit(1);
+    }
+
+    if (config.recursive && config.output === 'clip') {
+        console.error("❌ Error: Recursive mode cannot be used with clipboard output (-o clip). Use -o file instead to save each compressed file individually.");
         process.exit(1);
     }
 
