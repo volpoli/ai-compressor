@@ -98,7 +98,7 @@ ai-compress document.md --format stats-only
 ai-compress file.py --dry-run --verbose
 ```
 
-## ⚙️ Configuration
+## ⚙️ Configuration (WORK IN PROGRESS)
 
 The tool automatically searches for configuration files starting from the current directory up to the project root:
 
